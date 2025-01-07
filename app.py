@@ -3,10 +3,10 @@ import pickle
 import numpy as np
 import pandas as pd
 
-with open('scaler.pkl','rb') as file:
+with open('house_price_scaler-2.pkl','rb') as file:
     scaler = pickle.load(file)
 
-with open('rf_model.pkl','rb') as file:
+with open('rf_house_price_model.pkl','rb') as file:
     model = pickle.load(file)
 
 st.title('Deployment of ML model..')
@@ -27,17 +27,14 @@ with tab1:
     
     bed = st.number_input('No. of bedroom', 1, 5)
     
-    zip = st.selectbox("Zip code",[98144, 98106, 98107, 98199])
-    
     startPredict = st.button('Estimate Price')
     
     if startPredict==True:
     
         size = int(size)
         lot_size = int(size)
-        zip = int(zip)
     
-        data = np.array([bed, bath, size, lot_size, zip])
+        data = np.array([bed, bath, size, lot_size])
         # st.write(data)
         
         data = scaler.transform(data.reshape(1,-1))
@@ -67,11 +64,11 @@ with tab3:
     select_model = st.selectbox('Choose model',['RF','DT','DNN'])
     
     if select_model == 'RF':
-        with open('rf_model.pkl','rb') as file:
+        with open('rf_house_price_model.pkl','rb') as file:
             model_1 = pickle.load(file)
         
         
     elif select_model == 'DT':
-        with open('dt_model.pkl','rb') as file:
+        with open('dt_house_price_model.pkl','rb') as file:
             model = pickle.load(file)
 
